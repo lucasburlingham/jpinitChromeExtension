@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto');
         body {
             font-family: Ubuntu, Roboto;
         }
@@ -30,7 +31,10 @@
             URL to send:
             <br>
             <input type="url" name="url" id="formURL" />
+            <br>
             <a href="" onclick="displayURL(url)"><small>Click to use Current Tab...</small></a>
+            <br>
+            <small>(Coming Soon...)</small>
             <br>
             <br>
             Recipient Email:
@@ -44,25 +48,29 @@
                 placeholder="I thought that you might like this article - Jay Doe"></textarea>
             <br>
             <br>
-            <button type="submit" onclick="displaySubmitted()" class="btn btn-primary" id="submitButton">Submit</button>
+            <button type="submit" onclick="return changeText('submitbutton');" class="btn btn-primary"
+                id="submitButton">Submit</button>
         </form>
     </div>
     <script>
         function displayURL(url) {
-            document.getElementsByName('formURL')[0].placeholder = url;
-            inputForm.elements["url"].value = urlOutput;
+            
+            inputForm.elements["url"].value = url;
             inputForm = document.forms['inputForm'];
             chrome.tabs.query({
                 active: true,
                 lastFocusedWindow: true
             }, tabs => {
-                let url = tabs[0].urlOutput;
+                let url = tabs[0].url;
             });
+            document.getElementsByID('formURL').placeholder = url;
         }
 
-        function displaySubmitted() {
-            document.getElementById('submitButton').value = "Submitted!";
-        }
+        function changeText(submitId) {
+            var submit = document.getElementById(submitId);
+            submit.value = 'Loading...';
+            return false;
+        };
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js">
